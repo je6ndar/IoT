@@ -1,0 +1,5 @@
+{
+    "idf.adapterTargetName": "custom",
+    "idf.customAdapterTargetName": "arduino nano",
+    "idf.port": "/dev/ttyUSB1"
+}
