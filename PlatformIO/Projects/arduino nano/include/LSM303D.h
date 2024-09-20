@@ -45,7 +45,8 @@ class LSM303D {
         int WHO_AM_I_ADDR = 0x0F;
         int WHO_AM_I_EXP = 0x49;
         int PWR_MODE = 1;
-        float SCALE_FACTOR;
+        float SCALE_FACTOR_ACC = 1;
+        float SCALE_FACTOR_MAG = 1;
 
         void SET_SENSITIVITY();
         void SET_ODR_MAG();

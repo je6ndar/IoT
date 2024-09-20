@@ -73,7 +73,7 @@ void printGYRO(L3GD20_GYRO_DATA GYRO_DATA, double offsetX, double offsetY, doubl
   Serial.println();
 }
 
-void printMAG(LSM303D_MAG_DATA, double offsetX = 0, double offsetY = 0, double offsetZ = 0){
+void printMAG(LSM303D_MAG_DATA MAG_DATA, double offsetX = 0, double offsetY = 0, double offsetZ = 0){
   // if (typeid(MAG_DATA)!=typeid(LSM303D_MAG_DATA)){
   //   Serial.print("WRONG MAG DATA TYPE");
   //   return;
@@ -92,7 +92,7 @@ void printMAG(LSM303D_MAG_DATA, double offsetX = 0, double offsetY = 0, double o
   Serial.println();
 }
 
-void printACC(LSM303D_ACC_DATA, double offsetX = 0, double offsetY = 0, double offsetZ = 0){
+void printACC(LSM303D_ACC_DATA ACC_DATA, double offsetX = 0, double offsetY = 0, double offsetZ = 0){
   // if (typeid(ACC_DATA)!=typeid(LSM303D_ACC_DATA)){
   //   Serial.print("WRONG ACC DATA TYPE");
   //   return;

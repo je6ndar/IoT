@@ -20,19 +20,19 @@ void LSM303D::begin(){
 LSM303D_ACC_DATA LSM303D::getACC(void){
     LSM303D_ACC_DATA data;
 
-    Wire.beginTransmission(static_cast<int>(SENS_ADDR));
-    Wire.write(0x28 | 0x80);  // Set auto-increment for multiple byte read
+    Wire.beginTransmission(SENS_ADDR);
+    Wire.write(0x28);//| 0x80);  // Set auto-increment for multiple byte read
     Wire.endTransmission(false);
-    Wire.requestFrom(static_cast<int>(SENS_ADDR), 6); // Requesting 6 bytes for all 3 axes (2 bytes each)
+    Wire.requestFrom(SENS_ADDR, 6); // Requesting 6 bytes for all 3 axes (2 bytes each)
 
-    int16_t GyroX = Wire.read() | Wire.read() << 8;
-    int16_t GyroY = Wire.read() | Wire.read() << 8;
-    int16_t GyroZ = Wire.read() | Wire.read() << 8;
+    int16_t AccX = Wire.read() | Wire.read() << 8;
+    int16_t AccY = Wire.read() | Wire.read() << 8;
+    int16_t AccZ = Wire.read() | Wire.read() << 8;
 
     // Convert raw values to degrees per second using the scale factor
-    data.AccX= static_cast<float>(GyroX) * SCALE_FACTOR;
-    data.AccY = static_cast<float>(GyroY) * SCALE_FACTOR;
-    data.AccZ = static_cast<float>(GyroZ) * SCALE_FACTOR;
+    data.AccX= static_cast<float>(AccX) * SCALE_FACTOR_ACC/1000;
+    data.AccY = static_cast<float>(AccY) * SCALE_FACTOR_ACC/1000;
+    data.AccZ = static_cast<float>(AccZ) * SCALE_FACTOR_ACC/1000;
 
     return data;
 }
@@ -40,18 +40,18 @@ LSM303D_ACC_DATA LSM303D::getACC(void){
 LSM303D_MAG_DATA LSM303D::getMAG(void){
     LSM303D_MAG_DATA data;
 
-    Wire.beginTransmission(static_cast<int>(SENS_ADDR));
-    Wire.write(0x08 | 0x80);
+    Wire.beginTransmission(SENS_ADDR);
+    Wire.write(0x08);
     Wire.endTransmission(false);
-    Wire.requestFrom(static_cast<int>(SENS_ADDR), 6);
+    Wire.requestFrom(SENS_ADDR, 6);
 
     int16_t MagX = Wire.read() | Wire.read() << 8;
     int16_t MagY = Wire.read() | Wire.read() << 8;
     int16_t MagZ = Wire.read() | Wire.read() << 8;
 
-    data.MagX= static_cast<float>(MagX) * SCALE_FACTOR;
-    data.MagY = static_cast<float>(MagY) * SCALE_FACTOR;
-    data.MagZ = static_cast<float>(MagZ) * SCALE_FACTOR;
+    data.MagX= static_cast<float>(MagX) * SCALE_FACTOR_MAG/1000;
+    data.MagY = static_cast<float>(MagY) * SCALE_FACTOR_MAG/1000;
+    data.MagZ = static_cast<float>(MagZ) * SCALE_FACTOR_MAG/1000;
 
     return data;
 }
@@ -82,18 +82,23 @@ void LSM303D::SET_SENSITIVITY(){
     switch (config.ACC_SENSITIVITY) {
         case 2:
             ctrlReg2Value = 0x00;  // ±2g
+            SCALE_FACTOR_ACC = 0.061;
             break;
         case 4:
             ctrlReg2Value = 0x10;  // ±4g
+            SCALE_FACTOR_ACC = 0.122;
             break;
         case 6:
             ctrlReg2Value = 0x20;  // ±6g
+            SCALE_FACTOR_ACC = 0.183;
             break;
         case 8:
             ctrlReg2Value = 0x30;  // ±8g
+            SCALE_FACTOR_ACC = 0.244;
             break;
         case 16:
             ctrlReg2Value = 0x40;  // ±16g
+            SCALE_FACTOR_ACC = 0.732;
             break;
         default:
             Serial.println("Invalid accelerometer sensitivity setting");
@@ -104,15 +109,19 @@ void LSM303D::SET_SENSITIVITY(){
     switch (config.MAG_SENSITIVITY) {
         case 2:
             ctrlReg3Value = 0x00;  // ±2 gauss
+            SCALE_FACTOR_MAG = 0.080;
             break;
         case 4:
             ctrlReg3Value = 0x20;  // ±4 gauss
+            SCALE_FACTOR_MAG = 0.160;
             break;
         case 8:
             ctrlReg3Value = 0x40;  // ±8 gauss
+            SCALE_FACTOR_MAG = 0.320;
             break;
         case 12:
             ctrlReg3Value = 0x60;  // ±12 gauss
+            SCALE_FACTOR_MAG = 0.479;
             break;
         default:
             Serial.println("Invalid magnetometer sensitivity setting");
