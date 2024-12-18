@@ -1,0 +1,5 @@
+/home/je6ndar/IoT/mpu6050/build/_deps/picotool/picotool
+/home/je6ndar/IoT/mpu6050/build/_deps/picotool/picotoolTargets.cmake
+/home/je6ndar/IoT/mpu6050/build/_deps/picotool/picotoolTargets-release.cmake
+/home/je6ndar/IoT/mpu6050/build/_deps/picotool/picotoolConfig.cmake
+/home/je6ndar/IoT/mpu6050/build/_deps/picotool/picotoolConfigVersion.cmake

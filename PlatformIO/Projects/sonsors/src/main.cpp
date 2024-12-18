@@ -20,6 +20,8 @@ LSM303D_MAG_DATA MAG_DATA;
 
 void setup() {
   Serial.begin(115200);
+
+  delay(10000);
   
   gyro.config.SENSITIVITY = 500;
   Serial.println("Setting up gyroscope....");
@@ -32,7 +34,8 @@ void setup() {
   acc.config.OUTPUT_DATA_RATE_MAG=125;
   Serial.println("Setting up accelerometer....");
 
-  delay(2000);
+  delay(10000);
+
 
   Wire.begin();        // Optional: Pass specific SDA, SCL pins if not using default
   acc.begin();
@@ -45,18 +48,18 @@ void loop() {
   ACC_DATA = acc.getACC();
   MAG_DATA = acc.getMAG();
 
-  printGYRO(GYRO_DATA, 1.2631, -0.9757, -0.1784);
-  printACC(ACC_DATA);
-  printMAG(MAG_DATA);
+  printGYRO(GYRO_DATA, 0, 0, 0);
+  printACC(ACC_DATA, 0, 0, 0);
+  printMAG(MAG_DATA, 0, 0, 0);
   
   delay(1000);
 }
 
-void printGYRO(L3GD20_GYRO_DATA GYRO_DATA, double offsetX = 0, double offsetY = 0, double offsetZ = 0){
-  if (typeid(GYRO_DATA)!=typeid(L3GD20_GYRO_DATA)){
-    Serial.print("WRONG GYRO DATA TYPE");
-    return;
-  }
+void printGYRO(L3GD20_GYRO_DATA GYRO_DATA, double offsetX, double offsetY, double offsetZ){
+  // if (typeid(GYRO_DATA)!=typeid(L3GD20_GYRO_DATA)){
+  //   Serial.print("WRONG GYRO DATA TYPE");
+  //   return;
+  // }
 
   float RateX = GYRO_DATA.x + offsetX; //1.2631
   float RateY = GYRO_DATA.y + offsetY; //-0.9757
@@ -71,14 +74,14 @@ void printGYRO(L3GD20_GYRO_DATA GYRO_DATA, double offsetX = 0, double offsetY = 
   Serial.println();
 }
 
-void printMAG(LSM303D_MAG_DATA, double offsetX = 0, double offsetY = 0, double offsetZ = 0){
-  if (typeid(MAG_DATA)!=typeid(LSM303D_MAG_DATA)){
-    Serial.print("WRONG MAG DATA TYPE");
-    return;
-  }
-  float MagX = GYRO_DATA.x + offsetX;
-  float MagY = GYRO_DATA.y + offsetY;
-  float MagZ = GYRO_DATA.z + offsetZ;
+void printMAG(LSM303D_MAG_DATA MAG_DATA, double offsetX, double offsetY, double offsetZ){
+  // if (typeid(MAG_DATA)!=typeid(LSM303D_MAG_DATA)){
+  //   Serial.print("WRONG MAG DATA TYPE");
+  //   return;
+  // }
+  float MagX = MAG_DATA.MagX + offsetX;
+  float MagY = MAG_DATA.MagY + offsetY;
+  float MagZ = MAG_DATA.MagZ + offsetZ;
   
   Serial.print("MagX: ");
   Serial.print(MagX);
@@ -89,11 +92,11 @@ void printMAG(LSM303D_MAG_DATA, double offsetX = 0, double offsetY = 0, double o
   Serial.println();
 }
 
-void printACC(LSM303D_ACC_DATA, double offsetX = 0, double offsetY = 0, double offsetZ = 0){
-  if (typeid(ACC_DATA)!=typeid(LSM303D_ACC_DATA)){
-    Serial.print("WRONG ACC DATA TYPE");
-    return;
-  }
+void printACC(LSM303D_ACC_DATA ACC_DATA, double offsetX, double offsetY, double offsetZ){
+  // if (typeid(ACC_DATA)!=typeid(LSM303D_ACC_DATA)){
+  //   Serial.print("WRONG ACC DATA TYPE");
+  //   return;
+  // }
   
   float AccX = ACC_DATA.AccX + offsetX;
   float AccY = ACC_DATA.AccY + offsetY;

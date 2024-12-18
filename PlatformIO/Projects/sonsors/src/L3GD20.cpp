@@ -28,9 +28,9 @@ L3GD20_GYRO_DATA L3GD20::getMeasurements(void){
     int16_t GyroZ = Wire.read() | Wire.read() << 8;
 
     // Convert raw values to degrees per second using the scale factor
-    data.x = static_cast<float>(GyroX) * SCALE_FACTOR;
-    data.y = static_cast<float>(GyroY) * SCALE_FACTOR;
-    data.z = static_cast<float>(GyroZ) * SCALE_FACTOR;
+    data.x = static_cast<float>(GyroX);// * SCALE_FACTOR;
+    data.y = static_cast<float>(GyroY);// * SCALE_FACTOR;
+    data.z = static_cast<float>(GyroZ);// * SCALE_FACTOR;
 
     return data;
 }

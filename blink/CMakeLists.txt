@@ -37,5 +37,5 @@ endif()
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(blink)
-
+pico_enable_stdio_usb(${PROJECT_NAME} 1)
 # add url via pico_set_program_url
